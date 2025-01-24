@@ -1,138 +1,103 @@
-# ERP Backend System
+# ERP Backend System (ASP.NET Core 9)
 
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
-![ASP.NET Core](https://img.shields.io/badge/framework-ASP.NET%20Core%209-blue)
-![SQL Server](https://img.shields.io/badge/database-SQL%20Server-orange)
+![Framework](https://img.shields.io/badge/framework-ASP.NET%20Core%209-blue)
+![Database](https://img.shields.io/badge/database-SQL%20Server-orange)
 
 ## 📖 Overview
-This is a **multi-tenant ERP backend system** designed to optimize the operations of small and medium-sized businesses. Built with **ASP.NET Core 9**, the application manages HR, finance, invoicing, inventory, and more while ensuring secure multi-tenancy with robust data isolation.
+This is a **highly scalable multi-tenant ERP backend system** built with **ASP.NET Core 9**, designed to optimize the management of small and medium-sized businesses. The system handles operations related to HR, finance, invoicing, inventory, and more, with a robust **data isolation mechanism** ensuring that each tenant has secure access to its own resources.
 
-The system is modular and highly scalable, utilizing **SOLID principles**, **Repository Pattern**, and **ADO.NET** for peak performance. A strong focus is placed on data integrity, security, and speed, leveraging **Stored Procedures** and **Indexed Views** in **SQL Server**.
+This repository showcases key excerpts of the project, but it contains **far more functionality and implementation details** beyond what's highlighted here.
 
 ---
 
-## 🚀 Features
-- **Multi-Tenant Architecture**: Secure data isolation for multiple companies within the same system.
+## 🚀 Features at a Glance
+- **Multi-Tenant Architecture**:
+  - Complete data isolation between companies.
+  - Tenant-based role management with granular permissions.
+  
 - **Role-Based Access Control**:
-  - **Super Admin**: Manages user and company creation, but cannot view company-specific data.
-  - **Company Admin**: Manages company-level operations and assigns roles to users.
-  - **Regular Users**: Limited access based on role permissions.
-- **Modules**:
-  - Human Resource Management (HRM).
-  - Financial Accounting.
-  - Invoicing and Sales.
-  - Inventory and Product Management.
-  - Maintenance and Workshop Management.
-  - Procurement Operations.
-- **Performance Optimization**:
-  - **ADO.NET** for direct and efficient database communication.
-  - Use of **Stored Procedures** for secure and fast data operations.
-  - **Indexes** and **Views** to enhance query performance.
-- **Security**:
-  - Authentication with **Identity Framework**.
-  - Strong isolation between tenant data.
+  - **Super Admin**: Can create companies and users but has no access to company data.
+  - **Company Admin**: Full control over company operations and user management.
+  - **Standard Users**: Access restricted by roles and permissions.
+
+- **Core Modules**:
+  - Human Resource Management (**HRM**).
+  - Financial Management.
+  - Inventory and Stock Tracking.
+  - Sales and Invoicing.
+  - Maintenance Requests.
+  - Product and Procurement Management.
+  - Workshop Operations.
+
+- **Optimized for Performance**:
+  - Direct database access with **ADO.NET** for critical operations.
+  - **Stored Procedures**, **Indexes**, and **Views** in SQL Server.
+  - Modular services for each business function to ensure scalability.
+
+- **Advanced Security**:
+  - Authentication via **Identity Framework**.
+  - SQL Injection prevention through parameterized queries and stored procedures.
 
 ---
 
-## 📂 Project Structure
+## 📂 Solution Structure
 
-The solution is divided into multiple libraries for modularity and maintainability:
+The project is organized into multiple libraries to ensure maintainability and clear separation of concerns:
 
-### **Main API Project**
-- **ERP.API**: The entry point, hosting all the controllers and handling API requests.
+### **Main Project: ERP.API**
+The main entry point hosting API endpoints with controllers for all modules.
 
-### **Business Layer**
-Contains the core business logic, organized by functional modules:
-- **ServiceAddress**: Manages addresses, cities, districts, and countries.
-  - `AddressService`, `CityService`, `CountryService`, `DistrictService`.
-- **ServiceAuth**: Handles authentication and user roles.
-- **ServiceFinancial**: Financial accounting and transaction management.
-- **ServiceHRM**: Human resource management (employee data, payroll, attendance).
-- **ServiceInventory**: Inventory tracking and stock management.
-- **ServiceInvoice**: Sales invoicing and billing.
-- **ServiceMaintenance**: Maintenance requests and management.
-- **ServiceProcurement**: Procurement and supplier management.
-- **ServiceProductManagement**: Product lifecycle and categorization.
-- **ServiceSales**: Sales operations.
-- **ServiceWorkshop**: Workshop and task management.
+### **Business Layer: ERP.API.BusinessLayer**
+- Contains all service logic for the modules:
+  - `ServiceAddress` (Addresses, Cities, Districts, Countries).
+  - `ServiceAuth` (Authentication and Roles).
+  - `ServiceFinancial` (Financial operations).
+  - `ServiceHRM` (Human resources).
+  - `ServiceInventory` (Inventory management).
+  - `ServiceInvoice` (Invoicing and billing).
+  - `ServiceProcurement` (Procurement processes).
+  - `ServiceProductManagement` (Products and categories).
+  - `ServiceSales` (Sales operations).
+  - `ServiceWorkshop` (Workshops and maintenance).
 
-### **Data Access Layer**
-- **ERP.API.DataAccessLayer**:
-  - Contains **Repositories** to abstract database operations.
-  - Uses **ADO.NET** for optimized and secure data access.
-  - Implements **Stored Procedures** for all critical database interactions.
+### **Data Access Layer: ERP.API.DataAccessLayer**
+- Implements **Repository Pattern** to abstract database operations.
+- Uses **ADO.NET** for efficient and secure database access.
+- All critical operations rely on **Stored Procedures**.
 
-### **Utility Library**
-- **ERP.API.Utility**:
-  - Contains shared utilities, such as logging, error handling, and common helpers.
+### **Utility Layer: ERP.API.Utility**
+- Shared utilities and helpers, such as:
+  - Logging.
+  - Exception handling.
+  - Configuration utilities.
 
 ---
 
-## ⚙️ Database Design
+## 📄 Database Design
 
-### **Database Overview**
-The system uses **SQL Server** as the primary database, designed for high performance and scalability. Key features include:
-- **Stored Procedures** for CRUD operations, ensuring data security and reducing the risk of SQL injection.
-- **Indexed Views** to optimize performance for complex queries.
-- Separate schemas for tenant data to maintain isolation.
+### **Key Highlights**:
+- Designed for **multi-tenant data isolation**.
+- Focus on performance and scalability using:
+  - **Stored Procedures** for all CRUD operations.
+  - **Indexed Views** for frequently queried data.
 
 ### **Core Tables**:
-1. **Tenants**: Stores company-specific metadata.
-   - `TenantID`, `CompanyName`, `CreatedAt`, `SubscriptionStatus`.
-2. **Users**: Manages users and their roles.
-   - `UserID`, `Email`, `PasswordHash`, `Role`, `TenantID`.
-3. **HRM**: Handles employee data.
-   - `EmployeeID`, `FirstName`, `LastName`, `HireDate`, `Position`, `TenantID`.
-4. **Finance**: Tracks financial transactions and accounts.
-   - `TransactionID`, `Amount`, `Description`, `TransactionDate`, `TenantID`.
-5. **Inventory**: Tracks inventory and stock.
-   - `ProductID`, `ProductName`, `Stock`, `ReorderLevel`, `TenantID`.
+1. **Tenants**: Manages tenant-specific metadata.
+2. **Users**: Handles user data and roles.
+3. **HRM**: Stores employee data, attendance, and payroll information.
+4. **Finance**: Tracks financial transactions and account details.
+5. **Inventory**: Manages stock levels and product information.
 6. **Invoices**: Tracks sales and billing.
-   - `InvoiceID`, `CustomerName`, `TotalAmount`, `CreatedAt`, `TenantID`.
+7. **Procurement**: Stores supplier and procurement data.
+
+### **Scalability and Security**:
+- Tenant ID is embedded in every query to isolate data.
+- Parameterized queries prevent SQL Injection.
 
 ---
 
-## 📄 API Endpoints
-
-### **Authentication**
-- **POST** `/api/auth/login`: User login.
-- **POST** `/api/auth/register`: Register a new user.
-
-### **Company Management**
-- **POST** `/api/companies`: Create a new company (Super Admin only).
-- **GET** `/api/companies`: Get a list of all companies.
-
-### **Address Management**
-- **GET** `/api/address/countries`: Get all countries.
-- **GET** `/api/address/cities/{countryId}`: Get cities by country.
-
-### **HRM**
-- **GET** `/api/hr/employees`: Get all employees for a tenant.
-- **POST** `/api/hr/employees`: Add a new employee.
-
-### **Inventory**
-- **GET** `/api/inventory/products`: Get a list of all products.
-- **POST** `/api/inventory/products`: Add a new product.
-
----
-
-## 💡 Key Design Highlights
-- **SOLID Principles**: The application follows SOLID principles for maintainability and scalability.
-- **Repository Pattern**: Abstracts database interactions for cleaner and more testable code.
-- **Unit Testing**: Comprehensive tests for business logic and database operations.
-
----
-
-## 📸 Screenshots
-- **Architecture Diagram**: A high-level overview of the system.
-![Architecture Diagram](docs/architecture-diagram.png)
-
-- **API Usage Example**: Sample requests and responses.
-![API Example](docs/api-example.png)
-
----
-
-## 📋 Installation Guide
+## 🛠 Installation and Setup
 
 ### Prerequisites:
 - **.NET Core 9 SDK**.
@@ -145,7 +110,7 @@ The system uses **SQL Server** as the primary database, designed for high perfor
     cd erp-backend
     ```
 2. Configure the database connection in `appsettings.json`.
-3. Run SQL scripts from `sql-scripts/` to set up the database.
+3. Run the SQL scripts in `sql-scripts/` to set up the database.
 4. Build and run the project:
     ```bash
     dotnet restore
@@ -155,15 +120,51 @@ The system uses **SQL Server** as the primary database, designed for high perfor
 
 ---
 
-## 🛠 Future Enhancements
-- Add a **reporting module** for generating financial and operational reports.
-- Implement **caching** for frequently accessed data.
-- Extend API documentation using **Swagger** for easier integration.
+## 📋 API Endpoints (Examples)
+### **Authentication**
+- **POST** `/api/auth/login`: User login with email and password.
+- **POST** `/api/auth/register`: Register a new user.
+
+### **Address Management**
+- **GET** `/api/address/countries`: List all countries.
+- **GET** `/api/address/cities/{countryId}`: Get cities by country.
+
+### **HRM**
+- **GET** `/api/hr/employees`: Retrieve employees for a tenant.
+- **POST** `/api/hr/employees`: Add a new employee.
+
+### **Inventory**
+- **GET** `/api/inventory/products`: List all products.
+- **POST** `/api/inventory/products`: Add a new product.
+
+---
+
+## 📸 Screenshots and Documentation
+This repository includes **key excerpts of the full implementation**. Additional features, diagrams, and screenshots (e.g., architecture diagrams, database schemas, etc.) are available upon request.
+
+---
+
+## 🎯 Why This Project Stands Out
+
+- **Enterprise-Level Architecture**:
+  - Modular design ensures easy maintenance and scalability.
+- **Performance Focus**:
+  - Leveraged ADO.NET, Stored Procedures, and Indexes to minimize latency.
+- **Secure Multi-Tenancy**:
+  - Isolated data and role-based permissions ensure robust security.
+
+---
+
+## 🌟 What's Next
+Future improvements and extensions could include:
+- Advanced reporting and analytics module.
+- Real-time notifications and alerting.
+- Enhanced caching for frequently accessed data.
 
 ---
 
 ## 👥 Contributors
-- **Your Name**: [GitHub Profile](https://github.com/your-username)
+- **[Alhamood ali mohammad]( https://github.com/Alhamoodmohammadali/ERP_SOLER)**
 
 ---
 
