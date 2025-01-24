@@ -7,7 +7,8 @@
 ## 📖 Overview
 This is a **highly scalable multi-tenant ERP backend system** built with **ASP.NET Core 9**, designed to optimize the management of small and medium-sized businesses. The system handles operations related to HR, finance, invoicing, inventory, and more, with a robust **data isolation mechanism** ensuring that each tenant has secure access to its own resources.
 
-This repository showcases key excerpts of the project, but it contains **far more functionality and implementation details** beyond what's highlighted here.
+This repository showcases key excerpts of the project, but it contains **far more functionality and implementation details** beyond what's highlighted here.  
+You can explore the full repository [here](https://github.com/Alhamoodmohammadali/ERP_SOLER/).
 
 ---
 
@@ -106,8 +107,8 @@ The main entry point hosting API endpoints with controllers for all modules.
 ### Steps:
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-username/erp-backend.git
-    cd erp-backend
+    git clone https://github.com/Alhamoodmohammadali/ERP_SOLER.git
+    cd ERP_SOLER
     ```
 2. Configure the database connection in `appsettings.json`.
 3. Run the SQL scripts in `sql-scripts/` to set up the database.
@@ -164,7 +165,7 @@ Future improvements and extensions could include:
 ---
 
 ## 👥 Contributors
-- **[Alhamood ali mohammad]( https://github.com/Alhamoodmohammadali/ERP_SOLER)**
+- **[Mohammad Ali Alhamood](https://github.com/Alhamoodmohammadali)**
 
 ---
 
